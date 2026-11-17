@@ -1,0 +1,39 @@
+name: Build MyBB catalog package
+
+on:
+  workflow_call:
+    inputs:
+      recipe:
+        type: string
+        default: catalog-package.json
+      version:
+        type: string
+        required: true
+
+permissions:
+  contents: read
+
+jobs:
+  package:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          path: plugin
+          persist-credentials: false
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          repository: mybbresources/actions
+          ref: ${{ job.workflow_sha }}
+          path: release-tools
+          persist-credentials: false
+      - name: Build unsigned catalog submission
+        env:
+          RECIPE: ${{ inputs.recipe }}
+          VERSION: ${{ inputs.version }}
+        run: python3 release-tools/build-plugin.py --root plugin --recipe "$RECIPE" --version "$VERSION" --output submission
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: catalog-submission
+          path: submission/
+          if-no-files-found: error
