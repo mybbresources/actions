@@ -12,3 +12,5 @@ The builder supplies the release version, archive entry names and package digest
 Download the `catalog-submission` artifact. Upload the ZIP and `meta.json` in
 the [catalog admin](https://plugins.mybbresources.com/admin) with the changelog.
 The catalog scans and signs the archive and a separate administrator approves it.
+
+[![advertisement](https://ads.servead.net/i/f8c565a6-dd2d-495f-bfaa-abd2edcc496c.svg)](https://ads.servead.net/c/f8c565a6-dd2d-495f-bfaa-abd2edcc496c)
